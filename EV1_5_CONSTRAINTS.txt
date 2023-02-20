@@ -1,0 +1,388 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Please provide the password for 'root@localhost': *******
+Save password for 'root@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \evaluacion_1
+Unknown command: '\evaluacion_1'
+ MySQL  localhost:3306 ssl  SQL > show tables;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > \use evaluacion_1
+Default schema set to `evaluacion_1`.
+Fetching global names, object names from `evaluacion_1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| asignaturas            |
+| empleados              |
+| estudiantes            |
+| primer_tabla           |
++------------------------+
+4 rows in set (0.0071 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc asignaturas;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| nombre   | varchar(50) | NO   |     | NULL    |       |
+| creditos | int         | NO   |     | NULL    |       |
+| semestre | int         | NO   |     | NULL    |       |
+| clave    | varchar(10) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.0081 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > des empleados;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'des empleados' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc empleados;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| id                | int         | YES  |     | NULL    |       |
+| id_depto          | int         | YES  |     | NULL    |       |
+| nombre            | varchar(50) | YES  |     | NULL    |       |
+| apellido          | varchar(50) | YES  |     | NULL    |       |
+| iniciales         | varchar(10) | YES  |     | NULL    |       |
+| fecha_nacimiento  | datetime    | YES  |     | NULL    |       |
+| rfc               | varchar(13) | YES  |     | NULL    |       |
+| nss               | varchar(20) | YES  |     | NULL    |       |
+| ciudad_nacimiento | text        | YES  |     | NULL    |       |
+| estado            | int         | YES  |     | NULL    |       |
+| pais              | varchar(10) | YES  |     | NULL    |       |
+| celular           | varchar(50) | YES  |     | NULL    |       |
+| tel_fijo          | varchar(20) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+13 rows in set (0.0040 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc estudiantes;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| no_control   | varchar(15) | NO   | PRI | NULL    |       |
+| nombre       | varchar(50) | NO   |     | NULL    |       |
+| apellidos    | varchar(50) | NO   |     | NULL    |       |
+| edad         | int         | NO   |     | NULL    |       |
+| carrera      | varchar(50) | NO   |     | NULL    |       |
+| especialidad | varchar(50) | YES  |     | NULL    |       |
+| telefono     | varchar(50) | YES  |     | NULL    |       |
+| direccion    | varchar(50) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.0041 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > create table docentes(
+                                             -> id int auto_increment key,
+                                             -> nombre varchar(50) not null,
+                                             -> apellidos varchar(50) not null,
+                                             -> rfc varchar(13) not null);
+Query OK, 0 rows affected (0.0332 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc docentes;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| nombre    | varchar(50) | NO   |     | NULL    |                |
+| apellidos | varchar(50) | NO   |     | NULL    |                |
+| rfc       | varchar(13) | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0036 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into docentes(nombre,apellidos,rfc)
+                                             -> values('RUBEN ALONSO','HERNANDEZ CHAVEZ', '1234567891012');
+Query OK, 1 row affected (0.0146 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from docentes;
++----+--------------+------------------+---------------+
+| id | nombre       | apellidos        | rfc           |
++----+--------------+------------------+---------------+
+|  1 | RUBEN ALONSO | HERNANDEZ CHAVEZ | 1234567891012 |
++----+--------------+------------------+---------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into docentes(nombre,apellidos,rfc)
+                                             -> values('Luis Raul','Arzola','12344577874');
+Query OK, 1 row affected (0.0078 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from docentes;
++----+--------------+------------------+---------------+
+| id | nombre       | apellidos        | rfc           |
++----+--------------+------------------+---------------+
+|  1 | RUBEN ALONSO | HERNANDEZ CHAVEZ | 1234567891012 |
+|  2 | Luis Raul    | Arzola           | 12344577874   |
++----+--------------+------------------+---------------+
+2 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into docentes(nombre,apellidos,rfc)
+                                             -> values('AAAAa','aaasd','117917971');
+Query OK, 1 row affected (0.0074 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from docentes;
++----+--------------+------------------+---------------+
+| id | nombre       | apellidos        | rfc           |
++----+--------------+------------------+---------------+
+|  1 | RUBEN ALONSO | HERNANDEZ CHAVEZ | 1234567891012 |
+|  2 | Luis Raul    | Arzola           | 12344577874   |
+|  3 | AAAAa        | aaasd            | 117917971     |
++----+--------------+------------------+---------------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > delete form docentes
+                                             -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'docentes' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > delete from docentes
+                                             -> where id=3;
+Query OK, 1 row affected (0.0090 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from docentes;
++----+--------------+------------------+---------------+
+| id | nombre       | apellidos        | rfc           |
++----+--------------+------------------+---------------+
+|  1 | RUBEN ALONSO | HERNANDEZ CHAVEZ | 1234567891012 |
+|  2 | Luis Raul    | Arzola           | 12344577874   |
++----+--------------+------------------+---------------+
+2 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into docentes(nombre,apellidos,rfc) values('Jesus','Avila','117917971');
+Query OK, 1 row affected (0.0064 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from docentes;
++----+--------------+------------------+---------------+
+| id | nombre       | apellidos        | rfc           |
++----+--------------+------------------+---------------+
+|  1 | RUBEN ALONSO | HERNANDEZ CHAVEZ | 1234567891012 |
+|  2 | Luis Raul    | Arzola           | 12344577874   |
+|  4 | Jesus        | Avila            | 117917971     |
++----+--------------+------------------+---------------+
+3 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > create table carreras(
+                                             -> clave int auto_increment key,
+                                             -> nombre varchar(50),
+                                             -> clave_carrera varchar(20),
+                                             -> nivel varchar(20));
+Query OK, 0 rows affected (0.0283 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc carreras;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| clave         | int         | NO   | PRI | NULL    | auto_increment |
+| nombre        | varchar(50) | YES  |     | NULL    |                |
+| clave_carrera | varchar(20) | YES  |     | NULL    |                |
+| nivel         | varchar(20) | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0044 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras(nombre,clave_carrera,nivel
+                                             -> values('INGENIERIA EN SISTEMAS COMPUTACIONALES','ISC-2020-ASDF','LICENCIATURA');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('INGENIERIA EN SISTEMAS COMPUTACIONALES','ISC-2020-ASDF','LICENCIATURA')' at line 2
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras(nombre,clave_carrera,nivel) values('INGENIERIA EN SISTEMAS COMPUTACIONALES','ISC-2020-ASDF','LICENCIATURA');
+Query OK, 1 row affected (0.0094 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+--------------+
+| clave | nombre                                 | clave_carrera | nivel        |
++-------+----------------------------------------+---------------+--------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA |
++-------+----------------------------------------+---------------+--------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras(nombre,clave_carrera,nivel) values('LICENCIATURA EN ADMINISTRACION','ISC-2020-ASDF','LICENCIATURA');
+Query OK, 1 row affected (0.0102 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > delete from carreras
+                                             -> where id=2;
+ERROR: 1054 (42S22): Unknown column 'id' in 'where clause'
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreas ;
+ERROR: 1146 (42S02): Table 'evaluacion_1.carreas' doesn't exist
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreas;
+ERROR: 1146 (42S02): Table 'evaluacion_1.carreas' doesn't exist
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables
+                                             -> ;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| asignaturas            |
+| carreras               |
+| docentes               |
+| empleados              |
+| estudiantes            |
+| primer_tabla           |
++------------------------+
+6 rows in set (0.0030 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+--------------+
+| clave | nombre                                 | clave_carrera | nivel        |
++-------+----------------------------------------+---------------+--------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA |
++-------+----------------------------------------+---------------+--------------+
+2 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras(nombre,clave_carrera,nivel) values('INGENIERIA INFORMATICA','ISC-2020-ASDF','CHAFOTA LA NETA');
+Query OK, 1 row affected (0.0071 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+-----------------+
+| clave | nombre                                 | clave_carrera | nivel           |
++-------+----------------------------------------+---------------+-----------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA    |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA    |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | CHAFOTA LA NETA |
++-------+----------------------------------------+---------------+-----------------+
+3 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > CREATE TABLE shirts (
+                                             ->     name VARCHAR(40),
+                                             ->     size ENUM('x-small', 'small', 'medium', 'large', 'x-large')
+                                             -> );
+Query OK, 0 rows affected (0.0284 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > inset into shirts(name)
+                                             -> values ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into shirts(name)
+values' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > inset into shirts(name,size) values('Playeron','large');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into shirts(name,size) values('Playeron','large')' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > inset into shirts values('Playeron','large');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into shirts values('Playeron','large')' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc shirts
+                                             -> ;
++-------+----------------------------------------------------+------+-----+---------+-------+
+| Field | Type                                               | Null | Key | Default | Extra |
++-------+----------------------------------------------------+------+-----+---------+-------+
+| name  | varchar(40)                                        | YES  |     | NULL    |       |
+| size  | enum('x-small','small','medium','large','x-large') | YES  |     | NULL    |       |
++-------+----------------------------------------------------+------+-----+---------+-------+
+2 rows in set (0.0039 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into shirts values('Playerota','large');
+Query OK, 1 row affected (0.0082 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from shirts;
++-----------+-------+
+| name      | size  |
++-----------+-------+
+| Playerota | large |
++-----------+-------+
+1 row in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into shirts values('Playerota','chiquitita');
+ERROR: 1265 (01000): Data truncated for column 'size' at row 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc carreras;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| clave         | int         | NO   | PRI | NULL    | auto_increment |
+| nombre        | varchar(50) | YES  |     | NULL    |                |
+| clave_carrera | varchar(20) | YES  |     | NULL    |                |
+| nivel         | varchar(20) | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+-----------------+
+| clave | nombre                                 | clave_carrera | nivel           |
++-------+----------------------------------------+---------------+-----------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA    |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA    |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | CHAFOTA LA NETA |
++-------+----------------------------------------+---------------+-----------------+
+3 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > update carreras
+                                             -> set nivel = 'LICENCIATURA'
+                                             -> where clave=2;
+Query OK, 0 rows affected (0.0052 sec)
+
+Rows matched: 1  Changed: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+-----------------+
+| clave | nombre                                 | clave_carrera | nivel           |
++-------+----------------------------------------+---------------+-----------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA    |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA    |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | CHAFOTA LA NETA |
++-------+----------------------------------------+---------------+-----------------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > update carreras set nivel = 'LICENCIATURA' where clave=3;
+Query OK, 1 row affected (0.0081 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+--------------+
+| clave | nombre                                 | clave_carrera | nivel        |
++-------+----------------------------------------+---------------+--------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | LICENCIATURA |
++-------+----------------------------------------+---------------+--------------+
+3 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > update carreas
+                                             -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > alter table carreras
+                                             -> alter colum nivel enum('LICENCIATURA','MAESTRIA','DOCTORADO');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nivel enum('LICENCIATURA','MAESTRIA','DOCTORADO')' at line 2
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > alter table carreras
+                                             -> alter column nivel enum('LICENCIATURA'.'MAESTRIA','DOCTORADO');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'enum('LICENCIATURA'.'MAESTRIA','DOCTORADO')' at line 2
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > alter table carreras modify nivel enum('LICENCIATURA'.'MAESTRIA','DOCTORADO');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.'MAESTRIA','DOCTORADO')' at line 1
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > alter table carreras
+                                             -> modify nivel enum('LICENCIATURA','MAESTRIA','DOCTORADO');
+Query OK, 3 rows affected (0.0605 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreas (nombre,clave_carrera,nivel)
+                                             -> values ('ARQUITECTURA', 'AR-2020-ASDE','LICENCIATURA');
+ERROR: 1146 (42S02): Table 'evaluacion_1.carreas' doesn't exist
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras (nombre,clave_carrera,nivel) values ('ARQUITECTURA', 'AR-2020-ASDE','LICENCIATURA');
+Query OK, 1 row affected (0.0077 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from carreras;
++-------+----------------------------------------+---------------+--------------+
+| clave | nombre                                 | clave_carrera | nivel        |
++-------+----------------------------------------+---------------+--------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | LICENCIATURA |
+|     4 | ARQUITECTURA                           | AR-2020-ASDE  | LICENCIATURA |
++-------+----------------------------------------+---------------+--------------+
+4 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| asignaturas            |
+| carreras               |
+| docentes               |
+| empleados              |
+| estudiantes            |
+| primer_tabla           |
+| shirts                 |
++------------------------+
+7 rows in set (0.0030 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into carreras (nombre,clave_carrera,nivel) values ('MESTRIA EN SISTEMAS', 'MSC-2020-ASDE','MAESTRIA');
+Query OK, 1 row affected (0.0064 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > SELECT * FROM CARRERAS;
++-------+----------------------------------------+---------------+--------------+
+| clave | nombre                                 | clave_carrera | nivel        |
++-------+----------------------------------------+---------------+--------------+
+|     1 | INGENIERIA EN SISTEMAS COMPUTACIONALES | ISC-2020-ASDF | LICENCIATURA |
+|     2 | LICENCIATURA EN ADMINISTRACION         | ISC-2020-ASDF | LICENCIATURA |
+|     3 | INGENIERIA INFORMATICA                 | ISC-2020-ASDF | LICENCIATURA |
+|     4 | ARQUITECTURA                           | AR-2020-ASDE  | LICENCIATURA |
+|     5 | MESTRIA EN SISTEMAS                    | MSC-2020-ASDE | MAESTRIA     |
++-------+----------------------------------------+---------------+--------------+
+5 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > create table personas(
+                                             -> id int auto_increment key,
+                                             -> nombre varchar(50),
+                                             -> edad int check(edad>0));
+Query OK, 0 rows affected (0.0271 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc personas;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| nombre | varchar(50) | YES  |     | NULL    |                |
+| edad   | int         | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0036 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into personas(nombre,edad)
+                                             -> values('Israel','0');
+ERROR: 3819 (HY000): Check constraint 'personas_chk_1' is violated.
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from personas;
+Empty set (0.0011 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > insert into personas(nombre,edad) values('Israel','20');
+Query OK, 1 row affected (0.0077 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > select * from personas;
++----+--------+------+
+| id | nombre | edad |
++----+--------+------+
+|  1 | Israel |   20 |
++----+--------+------+
+1 row in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL >
